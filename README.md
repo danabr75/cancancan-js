@@ -5,6 +5,9 @@ CanCanCan, But Accessible in the Front-End Javascript
 # Config
 require 'cancancan_js'
 
+Add this to your class Ability:
+`include CanCanCanExport`
+
 Add to your javascript application.js file:
 `//= require cancancan_js`
 
