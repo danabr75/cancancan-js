@@ -6,7 +6,7 @@ CanCanCan, But Accessible in the Front-End Javascript
 require 'cancancan_js'
 
 Add this to your class Ability:
-`include CanCanCanExport`
+`include CanCanCanJs::Export`
 
 Add to your javascript application.js file:
 `//= require cancancan_js`
