@@ -1,5 +1,5 @@
-require 'cancancan'
-require_relative 'cancancan_js/ability'
+# require 'cancancan'
+require_relative 'cancancan_js/cancancan_export'
 
 # module CanCanCanJS
 #   # config src: http://lizabinante.com/blog/creating-a-configurable-ruby-gem/
