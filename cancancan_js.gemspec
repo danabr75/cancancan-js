@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{cancancan_js}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
   s.date = %q{2023-02-25}
   s.authors = ["benjamin.dana.software.dev@gmail.com"]
   s.summary = %q{CanCanCan, But Accessible in the Front-End Javascript}

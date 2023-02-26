@@ -2,7 +2,7 @@
 require_relative 'cancancan_js/export'
 require_relative 'cancancan_js/engine'
 
-# module CanCanCanJS
+# module CanCanCanJs
 #   # config src: http://lizabinante.com/blog/creating-a-configurable-ruby-gem/
 #   class << self
 #     attr_accessor :configuration

@@ -92,28 +92,19 @@ var can = function(action, class_name, object, column, options) {
 }
 
 
-// $scope.set_abilities = function(active_account_id) {
-//   $.ajax({
-//       url: '/abilities',
-//       type: 'GET',
-//       data: {
-//         active_account_id: active_account_id
-//       },
-//       dataType: 'JSON',
-//       // timeout: 5000,
-//       error: function(error){
-//           console.log("set_abilities fetch failed");
-//           console.log(error);
-//       },
-//       success: function(data){
-//         $scope.current_user.abilities = data
-//         // Reload angular scope so that ng-shows will reflect ability changes.
-//         if(!$scope.$$phase) {
-//           $scope.$digest();
-//         }
-//       }
-//   });  
-// }
+function valueIsInArray(array, expected_value) {
+  // console.log("valueIsInArray")
+  found_value = false;
+  if (array) {
+    $.each( array, function( index, value ){
+      if (value == expected_value) {
+          found_value = true;
+      }
+    });
+  }
+  return found_value;
+}
+
 function isInArray(array, element) {
   if (array === undefined) {
     return false;
@@ -186,7 +177,7 @@ function checkCanConditionals(object, conditions, verbose) {
         var found_invalid_object = false
 
         $.each(object[assocation_name], function(index, value_in_object_array) {
-          if ( !$scope.valueIsInArray(expected_value, value_in_object_array) ) {
+          if ( !valueIsInArray(expected_value, value_in_object_array) ) {
             found_invalid_object = true
           }
         })
@@ -200,7 +191,7 @@ function checkCanConditionals(object, conditions, verbose) {
           console.log(object[assocation_name])
           console.log(expected_value)
         }
-        valid_condition = $scope.valueIsInArray(expected_value, object[assocation_name]);
+        valid_condition = valueIsInArray(expected_value, object[assocation_name]);
       }
     } else {
       if (verbose) {
