@@ -54,12 +54,28 @@ end
 We need to export the Ability rules to your front-end from your back-end. There are several ways to do this.
 - Add a new method to your user model
   - Add that method to a JSON serializer, export that user to the front-end
-- Create a new action/route on your users controller.
+- Create a new action/route on your users controller, application controller, or wherever.
   - Use that action to render the following JSON data: `current_ability.export` or `Ability.export(current_user)`
+### ex:
+```
+class ApplicationController < ActionController::Base
+  def abilities
+    render json: Ability.export(current_user).to_json
+    # or
+    # render json: current_ability.export.to_json
+  end
+end
+```
 
 ## Front-end
-After you are able to pull the back-end cancancan export to the front-end, you then call this javascript method and pass it the cancancan export:
+After you are able to pull the back-end cancancan export to the front-end via your created route, you then call this javascript method and pass it the cancancan export:
 `set_abilities(<export_rules>)`
+### ex:
+```
+$.get("<path_to_your_controller_and_action>", function(data, status){
+  set_abilities(data)
+});
+```
 
 # Usage
 You can now call the JS function `can`, and pass it similar CanCanCan values  
