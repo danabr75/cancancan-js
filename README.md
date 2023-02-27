@@ -10,7 +10,18 @@ Depending on your implementation and rule-setup, you may not want to do this.
 If you're using sensitive data as rule-conditions in your Ability#initialize, then you should NOT use this gem!
 
 # Config
-`require 'cancancan_js'`
+create init file: `config/initializers/cancancan_js.rb`
+and populate it with the following:
+```
+require "cancancan_js"
+
+# default values shown
+CanCanCanJs.configure do |config|
+  # Option to export ALL rules (SQL-backed) to the front-end
+  # - false by default
+  config.export_all_back_end_rules = false
+end
+```
 
 Add this to your class Ability:
 `include CanCanCanJs::Export`
@@ -19,6 +30,26 @@ Add to your javascript application.js file:
 `//= require cancancan_js`
 
 # Implementation
+## Ability class
+You can either set the CanCanCanJs.configuration.export_all_back_end_rules config to true
+Or use the `front_end` block we've added to Ability. Both rules are active, but only the `:read, Account` is exported to the front-end.
+### ex:
+```
+class Ability
+  include CanCan::Ability
+  include CanCanCanJs::Export
+  def initialize(user = nil)
+    # not front-end visible 
+    can :read, User
+
+    # front-end visible 
+    front_end do 
+      can :read, Account
+    end
+  end
+end
+```
+
 ## Back-end
 We need to export the Ability rules to your front-end from your back-end. There are several ways to do this.
 - Add a new method to your user model
