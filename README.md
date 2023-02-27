@@ -31,7 +31,7 @@ Add to your javascript application.js file:
 
 # Implementation
 ## Ability class
-You can either set the CanCanCanJs.configuration.export_all_back_end_rules config to true
+You can either set the `CanCanCanJs.configuration.export_all_back_end_rules` config to true  
 Or use the `front_end` block we've added to Ability. Both rules are active, but only the `:read, Account` is exported to the front-end.
 ### ex:
 ```
