@@ -10,6 +10,37 @@ module CanCanCanJs
       {class_abilities: permissions[:can], object_rules: export_rules}
     end
 
+    def export_rules
+      new_list = {}
+      rules.each do |rule|
+        # init subjects if necessary
+        rule.subjects.each do |subject|
+          # subject_key is Class name as sym.
+          subject_key = subject.is_a?(Symbol) ? subject : subject.name.to_sym
+          new_list[subject_key] ||= {}
+          # init actions
+          rule.actions.each do |action|
+            # Change must match at least one conditional group in order to auth the action, or if condition_groups are nil
+            new_list[subject_key][action] ||= {condition_groups: nil}
+
+            new_list[subject_key][action][:condition_groups] ||= []
+            if rule.conditions.present?
+              new_list[subject_key][action][:condition_groups] << rule.conditions
+            else
+              # if no conditions, then the action SHOULD be allowed!
+              # - without this line, can-lines without conditions would not be exportable to the front-end
+              new_list[subject_key][action][:condition_groups] << nil
+            end
+            if action == :update || action == :create
+              klass = subject_key.to_s.constantize
+              new_list[subject_key][action][:whitelist_attribs] = permitted_attributes(action, klass)
+            end
+          end
+        end
+      end
+      return new_list
+    end
+
     module ClassMethods
       def export user
         local_ability = Ability.new(user)
