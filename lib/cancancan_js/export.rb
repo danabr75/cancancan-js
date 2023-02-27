@@ -7,7 +7,7 @@ module CanCanCanJs
     end
 
     def export
-      {class_abilities: permissions[:can], object_rules: export_rules}
+      {class_abilities: front_end_permissions[:can], object_rules: export_rules}
     end
 
     def front_end &block
@@ -17,6 +17,20 @@ module CanCanCanJs
       ensure
         CanCanCanJs.configuration.start_block_front_end_rules = false
       end
+    end
+
+    # replicating Ability#permissions method, but for front-end export
+    def front_end_permissions
+      permissions_list = {
+        can: Hash.new { |actions, k1| actions[k1] = Hash.new { |subjects, k2| subjects[k2] = [] } },
+        cannot: Hash.new { |actions, k1| actions[k1] = Hash.new { |subjects, k2| subjects[k2] = [] } }
+      }
+      usable_rules_list = front_end_rules
+      if CanCanCanJs.configuration.export_all_back_end_rules
+        usable_rules_list = rules
+      end
+      usable_rules_list.each { |rule| extract_rule_in_permissions(permissions_list, rule) }
+      permissions_list
     end
 
     def export_rules
@@ -58,7 +72,7 @@ module CanCanCanJs
       def export user
         local_ability = Ability.new(user)
         # We don't care about the 'cannot' section
-        return {class_abilities: local_ability.permissions[:can], object_rules: local_ability.export_rules}
+        return {class_abilities: local_ability.front_end_permissions[:can], object_rules: local_ability.export_rules}
       end
     end
   end
