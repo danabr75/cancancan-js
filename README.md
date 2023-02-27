@@ -93,3 +93,6 @@ $scope.can = function(action, class_name, object, column, options) {
 ```
 You can now use it in angular HTML with angular objects:
 `ng-show="can('update', resource_class, resource_instance)"`
+
+# Limitations
+Your front-end objects (`resource_instance` in the above example) needs to have all the attributes and, possibly nested, associations that you're using as auth-conditions.
