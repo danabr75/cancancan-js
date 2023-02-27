@@ -10,6 +10,14 @@ module CanCanCanJs
       {class_abilities: permissions[:can], object_rules: export_rules}
     end
 
+    # Only works with SQL rules, does not support `if` blocks
+    # Associational data has to be present on object to work. Best to work with attribute data.
+    #   i.e. when possible 
+    #     Use: `can [:update], Resource, account_id: [1,2,3]`
+    #     Not: `can [:update], Resource, accounts: { id [1,2,3] }`
+    # There might be association name differences between the back-end and front-end.
+    #   i.e. a user's `contact` might be `contact_attributes` on the front-end. Nothing to be done
+    #   right now. Can try using alias conversions here in the future. aliases = {user: {contacts: :contact_attributes}}
     def export_rules
       new_list = {}
       rules.each do |rule|
