@@ -1,4 +1,4 @@
-# cancancan-js
+# cancancan_js
 CanCanCan, But Accessible in the Front-End Javascript
 - uses CanCanCan Library: https://github.com/CanCanCommunity/cancancan
 - Only works with your SQL-backed CanCanCan rules. Will not work with the Ability block method conditions.
@@ -10,7 +10,7 @@ Depending on your implementation and rule-setup, you may not want to do this.
 If you're using sensitive data as rule-conditions in your Ability#initialize, then you should NOT use this gem!
 
 # Config
-require 'cancancan_js'
+`require 'cancancan_js'`
 
 Add this to your class Ability:
 `include CanCanCanJs::Export`
@@ -27,7 +27,7 @@ We need to export the Ability rules to your front-end from your back-end. There 
   - Use that action to render the following JSON data: `current_ability.export` or `Ability.export(current_user)`
 
 ## Front-end
-After you are able to pull the back-end cancancan export to the front-end, you then call this method and pass it the cancancan export:
+After you are able to pull the back-end cancancan export to the front-end, you then call this javascript method and pass it the cancancan export:
 `set_abilities(<export_rules>)`
 
 # Usage
