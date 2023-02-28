@@ -9,6 +9,10 @@ This gem requires you to export your CanCanCan Ability rules to the front-end.
 Depending on your implementation and rule-setup, you may not want to do this.  
 If you're using sensitive data as rule-conditions in your Ability#initialize, then you should NOT use this gem!
 
+# Install
+Add to your Gemfile:
+`gem 'cancancan_js'`
+
 # Config
 create init file: `config/initializers/cancancan_js.rb`
 and populate it with the following:
